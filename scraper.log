@@ -1,0 +1,84 @@
+2025-05-31 11:00:08,896 [INFO] patching driver executable /Users/redonferizi/Library/Application Support/undetected_chromedriver/undetected_chromedriver
+2025-05-31 11:00:14,466 [INFO] Fetching: https://www.donedeal.ie/cars
+2025-05-31 11:00:14,483 [ERROR] Failed to load page https://www.donedeal.ie/cars: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=137.0.7151.56)
+Stacktrace:
+0   undetected_chromedriver             0x0000000100af20c8 undetected_chromedriver + 6140104
+1   undetected_chromedriver             0x0000000100ae982a undetected_chromedriver + 6105130
+2   undetected_chromedriver             0x000000010057d3b0 undetected_chromedriver + 418736
+3   undetected_chromedriver             0x0000000100551aa0 undetected_chromedriver + 240288
+4   undetected_chromedriver             0x00000001005fd928 undetected_chromedriver + 944424
+5   undetected_chromedriver             0x000000010061c77c undetected_chromedriver + 1070972
+6   undetected_chromedriver             0x00000001005f5043 undetected_chromedriver + 909379
+7   undetected_chromedriver             0x00000001005c1287 undetected_chromedriver + 696967
+8   undetected_chromedriver             0x00000001005c1ef1 undetected_chromedriver + 700145
+9   undetected_chromedriver             0x0000000100aafc30 undetected_chromedriver + 5868592
+10  undetected_chromedriver             0x0000000100ab3baf undetected_chromedriver + 5884847
+11  undetected_chromedriver             0x0000000100a8aee6 undetected_chromedriver + 5717734
+12  undetected_chromedriver             0x0000000100ab450f undetected_chromedriver + 5887247
+13  undetected_chromedriver             0x0000000100a79794 undetected_chromedriver + 5646228
+14  undetected_chromedriver             0x0000000100ad71c8 undetected_chromedriver + 6029768
+15  undetected_chromedriver             0x0000000100ad7390 undetected_chromedriver + 6030224
+16  undetected_chromedriver             0x0000000100ae93f1 undetected_chromedriver + 6104049
+17  libsystem_pthread.dylib             0x00007ff819e64df1 _pthread_start + 99
+18  libsystem_pthread.dylib             0x00007ff819e60857 thread_start + 15
+
+2025-05-31 11:00:14,483 [INFO] Fetched 0 raw ads.
+2025-05-31 11:00:14,483 [INFO] 0 unique ads after dedupe.
+2025-05-31 11:00:14,483 [INFO] 0 bargains; 0 high-level bargains.
+2025-05-31 11:00:14,508 [INFO] Wrote 0 bargain records to diesel_bargains.csv
+2025-05-31 11:00:14,900 [INFO] Discord notification sent successfully.
+🟢 High-Level Bargains:
+
+🔵 General Bargains:
+
+⭐ Top 10 Listings (by Price):
+2025-05-31 12:00:12,345 [INFO] patching driver executable /Users/redonferizi/Library/Application Support/undetected_chromedriver/undetected_chromedriver
+2025-05-31 12:00:33,916 [INFO] Fetching: https://www.donedeal.ie/cars
+2025-05-31 12:00:39,953 [INFO] Fetching: https://www.donedeal.ie/cars?page=2
+2025-05-31 12:00:42,573 [INFO] Fetching: https://www.donedeal.ie/cars?page=3
+2025-05-31 12:00:45,054 [INFO] Fetched 90 raw ads.
+2025-05-31 12:00:45,078 [INFO] 30 unique ads after dedupe.
+2025-05-31 12:00:45,078 [INFO] 0 bargains; 0 high-level bargains.
+2025-05-31 12:00:45,235 [INFO] Wrote 0 bargain records to diesel_bargains.csv
+2025-05-31 12:00:46,355 [INFO] Discord notification sent successfully.
+🟢 High-Level Bargains:
+
+🔵 General Bargains:
+
+⭐ Top 10 Listings (by Price):
+1. 2008 €999 — 0 km — €999
+2. 2001 Toyota — 0 km — €1500
+3. 2005 2005 — 0 km — €2495
+4. 2012 Vauxhall — 221000 km — €3500
+5. 2013 2013 — 109600 km — €5750
+6. 2014 2014 — 0 km — €6500
+7. 2013 Honda — 0 km — €7999
+8. 2014 2014 — 200320 km — €8250
+9. 2012 Audi — 83000 km — €8700
+10. 2013 2013 — 0 km — €8995
+2025-05-31 13:06:53,031 [INFO] patching driver executable /Users/redonferizi/Library/Application Support/undetected_chromedriver/undetected_chromedriver
+2025-05-31 13:06:59,252 [INFO] Fetching: https://www.donedeal.ie/cars
+2025-05-31 13:07:04,558 [INFO] Fetching: https://www.donedeal.ie/cars?page=2
+2025-05-31 13:07:07,761 [INFO] Fetching: https://www.donedeal.ie/cars?page=3
+2025-05-31 13:07:11,221 [INFO] Fetched 90 raw ads.
+2025-05-31 13:07:11,223 [INFO] 34 unique ads after dedupe.
+2025-05-31 13:07:11,223 [INFO] 0 bargains; 0 high-level bargains.
+2025-05-31 13:07:11,225 [INFO] Wrote 0 bargain records to diesel_bargains.csv
+2025-05-31 13:07:11,650 [INFO] Discord notification sent successfully.
+🟢 High-Level Bargains:
+
+🔵 General Bargains:
+
+⭐ Top 10 Listings (by Price):
+1. 0 Skoda — 0 km — €0
+2. 0 Renault — 98000 km — €1800
+3. 0 Audi — 0 km — €1850
+4. 2008 Opel — 208400 km — €1950
+5. 0 Renault — 0 km — €2100
+6. 2007 BMW — 420000 km — €2350
+7. 2013 Hyundai — 0 km — €3000
+8. 2014 Nissan — 136000 km — €3499
+9. 0 Hyundai — 0 km — €3949
+10. 0 AUDI — 0 km — €4250

@@ -1,3 +1,4 @@
+#!/Users/redonferizi/Desktop/donedeal-scraper/venv/bin/python
 import time
 import re
 import json
