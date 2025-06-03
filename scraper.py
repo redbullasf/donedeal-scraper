@@ -5,7 +5,11 @@ import json
 import csv
 import argparse
 import logging
-import requests
+try:
+    import requests
+except Exception:  # noqa: disable=bare-except
+    requests = None
+import urllib.request
 from pathlib import Path
 
 import undetected_chromedriver as uc
@@ -26,11 +30,32 @@ def parse_ad(ad):
     brand = title.split()[0] if title else ""
 
     year = None
-    for m in re.finditer(r"\b(19\d{2}|20\d{2})\b", title):
-        y = int(m.group(0))
-        if 1900 <= y <= CURRENT_YEAR:
-            year = y
-            break
+    engine_size = None
+    fuel = ""
+    mileage = None
+    for mi in ad.get("metaInfo", []) or []:
+        if not isinstance(mi, str):
+            continue
+        if re.fullmatch(r"(19\d{2}|20\d{2})", mi.strip()):
+            y = int(mi)
+            if 1900 <= y <= CURRENT_YEAR:
+                year = y
+            continue
+        if "km" in mi.lower():
+            num = re.sub(r"[^\d]", "", mi)
+            try:
+                mileage = int(num)
+            except ValueError:
+                mileage = None
+            continue
+        if any(ft in mi for ft in ("Diesel", "Petrol", "Electric", "Hybrid")):
+            fuel = mi.strip()
+            m = re.search(r"([0-9.]+)", mi)
+            if m:
+                try:
+                    engine_size = float(m.group(1))
+                except ValueError:
+                    engine_size = None
 
     price_str = (ad.get("priceInfo", {}).get("price") or "")
     try:
@@ -38,27 +63,18 @@ def parse_ad(ad):
     except (ValueError, TypeError):
         price = 0.0
 
-    fuel = ""
-    mileage = None
-    for mi in ad.get("metaInfo", []) or []:
-        if not isinstance(mi, str):
-            continue
-        if any(ft in mi for ft in ("Diesel", "Petrol", "Electric", "Hybrid")):
-            fuel = mi
-        if "km" in mi.lower():
-            num = re.sub(r"[^\d]", "", mi)
-            try:
-                mileage = int(num)
-            except ValueError:
-                mileage = None
-
     return {
         "Title": title,
         "Brand": brand,
         "Year": year or 0,
+        "Engine Size": engine_size or 0.0,
         "Fuel": fuel,
         "Mileage (km)": mileage or 0,
         "Price (€)": price,
+        "Age": (ad.get("age") or "").strip(),
+        "County": (ad.get("county") or "").strip(),
+        "Town": (ad.get("countyTown") or "").strip(),
+        "URL": ad.get("friendlyUrl") or f"https://www.donedeal.ie{ad.get('relativeUrl','')}",
     }
 
 def fetch_ads(driver, url, wait_timeout=15):
@@ -93,13 +109,26 @@ def send_discord(bargains, high_bargains, top_list):
     for c in top_list:
         content.append(f"{c['Year']} {c['Brand']} - {c['Mileage (km)']} km - €{c['Price (€)']:.0f}")
 
-    payload = {"content": "\n".join(content)}
-    try:
-        resp = requests.post(DISCORD_WEBHOOK_URL, json=payload)
-        resp.raise_for_status()
-        logging.info("Discord notification sent successfully.")
-    except Exception as e:
-        logging.error(f"Failed to send Discord notification: {e}")
+    payload = json.dumps({"content": "\n".join(content)}).encode("utf-8")
+    if requests is None:
+        try:
+            req = urllib.request.Request(
+                DISCORD_WEBHOOK_URL,
+                data=payload,
+                headers={"Content-Type": "application/json"},
+            )
+            with urllib.request.urlopen(req) as resp:
+                resp.read()
+            logging.info("Discord notification sent successfully.")
+        except Exception as e:  # pragma: no cover - network failure not critical
+            logging.error(f"Failed to send Discord notification: {e}")
+    else:
+        try:
+            resp = requests.post(DISCORD_WEBHOOK_URL, json=json.loads(payload))
+            resp.raise_for_status()
+            logging.info("Discord notification sent successfully.")
+        except Exception as e:  # pragma: no cover
+            logging.error(f"Failed to send Discord notification: {e}")
 
 def main():
     parser = argparse.ArgumentParser(description="Scrape diesel car bargains and notify Discord.")
@@ -138,7 +167,13 @@ def main():
         seen = set()
         unique = []
         for car in cars:
-            key = (car["Title"], car["Year"], car["Mileage (km)"], car["Price (€)"])
+            key = (
+                car["Title"],
+                car["Year"],
+                car["Mileage (km)"],
+                car["Price (€)"],
+                car["URL"],
+            )
             if key not in seen:
                 seen.add(key)
                 unique.append(car)
@@ -172,7 +207,20 @@ def main():
 
         # Write CSV
         with open(args.output, "w", newline="", encoding="utf-8") as f:
-            fieldnames = ["Title", "Brand", "Year", "Fuel", "Mileage (km)", "Price (€)", "Category"]
+            fieldnames = [
+                "Title",
+                "Brand",
+                "Year",
+                "Engine Size",
+                "Fuel",
+                "Mileage (km)",
+                "Price (€)",
+                "Age",
+                "County",
+                "Town",
+                "URL",
+                "Category",
+            ]
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
             for c in unique:
