@@ -16,7 +16,7 @@ from selenium.common.exceptions import WebDriverException, NoSuchWindowException
 
 CURRENT_YEAR = 2025
 # Discord webhook URL hardcoded
-DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1378065115919814758/2eg0ewmeVJIFpEbln5xRnFKJgWW4313CFKD1TDBSDyy0oRA4uof8PrFJxavNf_QvLEUt"
+DISCORD_WEBHOOK_URL = ""
 
 def parse_ad(ad):
     """
